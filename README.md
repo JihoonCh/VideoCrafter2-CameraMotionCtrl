@@ -98,7 +98,6 @@ scripts/run_camera_motion.sh                         # generation entry point (o
 scripts/evaluation/inference_latent_opt.py           # proposed latent-optimization sampler
 scripts/evaluation/evaluate_temporal_metrics.py      # WE / TC / valid ratio
 scripts/evaluation/summarize_metrics.py              # aggregate CSVs -> Table 2
-scripts/evaluation/extract_concat_frames.py          # qualitative figure helper
 metrics/                                             # per-video metric CSVs used in the paper
 assets/camera_control/                               # qualitative comparison figures
 ```
