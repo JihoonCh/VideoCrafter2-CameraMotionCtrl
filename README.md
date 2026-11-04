@@ -8,9 +8,9 @@ A **training-free** method that steers the camera motion of a text-to-video diff
 
 ## Results
 
-Left: VideoCrafter2 baseline. Right: ours. Both use the same prompt and seed (16 frames, 320×512). With the camera direction written in the prompt, the baseline still barely moves.
+Left: VideoCrafter2 baseline. Right: ours. Both use the same prompt and seed (16 frames, 320×512). With the camera direction written in the prompt, the baseline still barely moves. The red arrow marks the target camera direction; scene content moves the opposite way in the frame (for example, a pan left makes objects slide to the right).
 
-**Pan left**: *"A luxurious hotel lobby with chandeliers and gold accents, polished floor, ultra-detailed, 4k, camera panning left from the elegant reception desk on the right to the lounge area on the left"*
+**Pan left**: *"A modern glass office atrium with hanging lights and steel beams, photorealistic, highly detailed, 4k, camera panning left from the glass elevator lobby on the right to the reception area on the left"*
 
 ![pan_left](assets/camera_control/pan_left.gif)
 
