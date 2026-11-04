@@ -90,14 +90,6 @@ The evaluation script uses these metrics:
 
 Optical flow is OpenCV Farneback by default (`--flow-method dis` is also available). No ground-truth video is needed.
 
-### Make comparison figures
-
-```bash
-python scripts/evaluation/extract_concat_frames.py results/pan_left_opt_scale_40/0009.mp4 out.jpg
-```
-
-This saves the first, middle, and last frames side by side.
-
 ## Repository structure (additions to VideoCrafter)
 
 ```
