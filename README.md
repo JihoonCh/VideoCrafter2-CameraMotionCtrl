@@ -8,7 +8,7 @@ A **training-free** method that steers the camera motion of a text-to-video diff
 
 ## Results
 
-**Pan left**: *"A modern glass office atrium with hanging lights and steel beams, photorealistic, highly detailed, 4k, camera panning left from the glass elevator lobby on the right to the reception area on the left"*
+**Pan left**: *"A vibrant Japanese shrine surrounded by autumn maple trees, soft sunlight, highly detailed, 4k, camera panning left from the shrine courtyard on the right to the stone torii gate on the left"*
 
 ![pan_left](assets/camera_control/pan_left.gif)
 
