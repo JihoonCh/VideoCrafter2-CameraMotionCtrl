@@ -10,19 +10,19 @@ A **training-free** method that steers the camera motion of a text-to-video diff
 
 **Pan left**: *"A vibrant Japanese shrine surrounded by autumn maple trees, soft sunlight, highly detailed, 4k, camera panning left from the shrine courtyard on the right to the stone torii gate on the left"*
 
-![pan_left](assets/camera_control/pan_left.gif)
+![pan_left](assets/camera_control/pan_left_v2.gif)
 
 **Pan right**: *"A snowy alpine village at dawn with smoke rising from chimneys, crisp atmosphere, ultra-realistic, 4k, camera panning right from the wooden cottages on the left to the snow-covered chapel on the right"*
 
-![pan_right](assets/camera_control/pan_right.gif)
+![pan_right](assets/camera_control/pan_right_v2.gif)
 
 **Tilt up**: *"A breathtaking mountain range at sunrise, cinematic lighting, 4k, highly detailed, camera tilting up from the misty valleys below to the golden sky above"*
 
-![tilt_up](assets/camera_control/tilt_up.gif)
+![tilt_up](assets/camera_control/tilt_up_v2.gif)
 
 **Tilt down**: *"A grand train station with vaulted architecture and suspended clocks, photorealistic, highly detailed, 4k, camera tilting down from the arched glass roof to the crowded platform below"*
 
-![tilt_down](assets/camera_control/tilt_down.gif)
+![tilt_down](assets/camera_control/tilt_down_v2.gif)
 
 ## Method
 
