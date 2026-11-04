@@ -90,26 +90,30 @@ def run_inference(args, gpu_num, gpu_no, **kwargs):
     ## -----------------------------------------------------------------
     start = time.time()
     n_rounds = len(prompt_list_rank) // args.bs
-    n_rounds = n_rounds+1 if len(prompt_list_rank) % args.bs != 0 else n_rounds
-    for idx in range(0, n_rounds):
-        print(f'[rank:{gpu_no}] batch-{idx+1} ({args.bs})x{args.n_samples} ...')
-        idx_s = idx*args.bs
-        idx_e = min(idx_s+args.bs, len(prompt_list_rank))
+    n_rounds = n_rounds + 1 if len(prompt_list_rank) % args.bs != 0 else n_rounds
+
+    # ✅ 전체 배치를 tqdm으로 감싸서 남은 시간 표시
+    for idx in tqdm(range(0, n_rounds), desc="Video Generation", unit="video"):
+        print(f'\n[rank:{gpu_no}] batch-{idx + 1} ({args.bs})x{args.n_samples} ...')
+
+        # ✅ 비디오 1개 생성 시작 시간 기록
+        video_start = time.time()
+
+        idx_s = idx * args.bs
+        idx_e = min(idx_s + args.bs, len(prompt_list_rank))
         batch_size = idx_e - idx_s
         filenames = filename_list_rank[idx_s:idx_e]
         noise_shape = [batch_size, channels, frames, h, w]
-        fps = torch.tensor([args.fps]*batch_size).to(model.device).long()
+        fps = torch.tensor([args.fps] * batch_size).to(model.device).long()
 
         prompts = prompt_list_rank[idx_s:idx_e]
         if isinstance(prompts, str):
             prompts = [prompts]
-        #prompts = batch_size * [""]
         text_emb = model.get_learned_conditioning(prompts)
 
         if args.mode == 'base':
             cond = {"c_crossattn": [text_emb], "fps": fps}
         elif args.mode == 'i2v':
-            #cond_images = torch.zeros(noise_shape[0],3,224,224).to(model.device)
             cond_images = load_image_batch(cond_inputs_rank[idx_s:idx_e], (args.height, args.width))
             cond_images = cond_images.to(model.device)
             img_emb = model.get_image_embeds(cond_images)
@@ -118,13 +122,31 @@ def run_inference(args, gpu_num, gpu_no, **kwargs):
         else:
             raise NotImplementedError
 
-        ## inference
-        batch_samples = batch_ddim_sampling(model, cond, noise_shape, args.n_samples, \
-                                                args.ddim_steps, args.ddim_eta, args.unconditional_guidance_scale, **kwargs)
-        ## b,samples,c,t,h,w
-        save_videos(batch_samples, args.savedir, filenames, fps=args.savefps)
+        # ✅ DDIM 샘플링 시작 시간
+        sample_start = time.time()
+        batch_samples = batch_ddim_sampling(model, cond, noise_shape, args.n_samples,
+                                            args.ddim_steps, args.ddim_eta,
+                                            args.unconditional_guidance_scale, **kwargs)
+        sample_elapsed = time.time() - sample_start
 
-    print(f"Saved in {args.savedir}. Time used: {(time.time() - start):.2f} seconds")
+        # ✅ 저장 시작 시간
+        save_start = time.time()
+        save_videos(batch_samples, args.savedir, filenames, fps=args.savefps)
+        save_elapsed = time.time() - save_start
+
+        # ✅ 비디오 1개 완료 로그
+        video_elapsed = time.time() - video_start
+        total_elapsed = time.time() - start
+        for fname in filenames:
+            print(
+                f"[✓] Saved: {fname}.mp4 | "
+                f"Sampling: {sample_elapsed:.1f}s | "
+                f"Saving: {save_elapsed:.1f}s | "
+                f"Video total: {video_elapsed:.1f}s | "
+                f"Overall elapsed: {total_elapsed:.1f}s"
+            )
+
+    print(f"\nAll done. Saved in {args.savedir}. Total time: {(time.time() - start):.2f}s")
 
 
 if __name__ == '__main__':
