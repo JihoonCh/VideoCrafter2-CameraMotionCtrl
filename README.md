@@ -8,8 +8,6 @@ A **training-free** method that steers the camera motion of a text-to-video diff
 
 ## Results
 
-Left: VideoCrafter2 baseline. Right: ours. Both use the same prompt and seed (16 frames, 320×512). With the camera direction written in the prompt, the baseline still barely moves. The red arrow marks the target camera direction; scene content moves the opposite way in the frame (for example, a pan left makes objects slide to the right).
-
 **Pan left**: *"A modern glass office atrium with hanging lights and steel beams, photorealistic, highly detailed, 4k, camera panning left from the glass elevator lobby on the right to the reception area on the left"*
 
 ![pan_left](assets/camera_control/pan_left.gif)
@@ -25,24 +23,6 @@ Left: VideoCrafter2 baseline. Right: ours. Both use the same prompt and seed (16
 **Tilt down**: *"A grand train station with vaulted architecture and suspended clocks, photorealistic, highly detailed, 4k, camera tilting down from the arched glass roof to the crowded platform below"*
 
 ![tilt_down](assets/camera_control/tilt_down.gif)
-
-### Quantitative results (Table 2)
-
-| Method | WE ↓ | TC ↑ | Valid ratio |
-|---|:---:|:---:|:---:|
-| VideoCrafter2 (baseline) | 0.0188 | 0.2319 | 0.9635 |
-| Ours (latent opt.) | 0.0275 | **0.7208** | 0.8660 |
-
-These are averages over 100 videos (25 prompts × 4 motions). Per-video numbers are in [`metrics/`](metrics). To reproduce the table from them, run `python scripts/evaluation/summarize_metrics.py`. Recomputing from the CSVs can differ from the paper in the 4th decimal place because of rounding.
-
-The baseline's WE is lower largely because it barely moves the camera at all. The mean optical flow of its videos is under 0.5 px/frame, versus about 6 px/frame in the intended direction for ours. The much higher TC shows that our larger motion stays temporally consistent and is well explained by optical flow.
-
-### Inference cost (Table 1, single RTX 6000 Ada)
-
-| Method | Time / video (s) | Peak VRAM (GB) |
-|---|:---:|:---:|
-| VideoCrafter2 (baseline) | 71 | 10 |
-| Ours (latent opt.) | 197 | 13 |
 
 ## Method
 
